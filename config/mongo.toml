@@ -1,8 +1,8 @@
-#Mysql 配置文件
+#Mongo 配置文件
 
-[Mysql]
-    [Mysql.ShenbianUgc]
-    Host = "123123"
+[Mongo]
+    [Mongo.ShenbianUgc]
+    Host = "mongo12313"
     Port = "3306"
     Name = "shenbian_ugc"
     User = "root"
