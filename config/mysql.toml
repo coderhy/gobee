@@ -1,0 +1,14 @@
+#Mysql 配置文件
+title = "TOML Example"
+
+[mysql]
+    [mysql.dev]
+    Host = "123123"
+    Port = "3306"
+    Name = "shenbian_ugc"
+    User = "root"
+    Password = "6661623616"
+    charset = "utf8mb4"
+    MaxOpenConns = "utf8mb4"
+    MaxIdleConns = "utf8mb4"
+    ConnMaxLifetime = "utf8mb4"
