@@ -38,10 +38,5 @@ func Setup() {
 		//优化
 		utils.AllCacheConfig[filenameOnly] = config
 	}
-	// aa := utils.AllCacheConfig["mysql"]
-	// bb := aa.Get("DB_ALL_DEMO")
-	// val := reflect.ValueOf(bb)
-	// fmt.Println(val)
-	// fmt.Println(val.Kind())
-	// fmt.Println(val.Type())
+
 }

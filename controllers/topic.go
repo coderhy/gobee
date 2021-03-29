@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"gobee/pkg/utils"
 	"log"
 
 	"github.com/astaxie/beego/validation"
@@ -21,6 +22,17 @@ type Topic struct {
 
 type GetOneRule struct {
 	TopicID int `valid:"Required;Min(1)"`
+}
+
+type Userinfo struct {
+	DbHost       string `json:"uuid"`
+	DbUser       string `json:"token"`
+	DbPwd        string `json:"username"`
+	DbName       string `json:"realname"`
+	DbPort       string `json:"nickname"`
+	MaxOpenConns string `json:"areaCode"`
+	MaxIdleConns string `json:"gold"`
+	Debug        string `json:"sex"`
 }
 
 // @Title GetTopic
@@ -47,6 +59,22 @@ func (t *TopicController) GetTopic() {
 	if err != nil {
 		t.Data["json"] = err.Error()
 	}
+
+	mongoData := utils.AllCacheConfig["mongo"]
+	demoData := mongoData.Get("MG_ALL_DEMO").(map[interface{}]interface{})
+
+	result := map[string]interface{}{}
+	data := map[string]interface{}{}
+	result["code"] = 1
+	result["msg"] = "成功"
+
+	for k, v := range demoData {
+		data[k.(string)] = v
+	}
+	result["data"] = data
+	t.Data["json"] = result
+	// ob := json.Unmarshal(bb, &userinfo)
+	// t.Ctx.Input.Bind(&str, "str")
 
 	// if !b {
 	// 	topicInfo, err := models.GetOne(form.TopicID)
