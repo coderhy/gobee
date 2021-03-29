@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"gobee/pkg/utils"
 	"log"
 
@@ -25,14 +26,14 @@ type GetOneRule struct {
 }
 
 type Userinfo struct {
-	DbHost       string `json:"uuid"`
-	DbUser       string `json:"token"`
-	DbPwd        string `json:"username"`
-	DbName       string `json:"realname"`
-	DbPort       string `json:"nickname"`
-	MaxOpenConns string `json:"areaCode"`
-	MaxIdleConns string `json:"gold"`
-	Debug        string `json:"sex"`
+	DbHost       string `json:"dbhost"`
+	DbUser       string `json:"dbuser"`
+	DbPwd        string `json:"dbpwd"`
+	DbName       string `json:"dbname"`
+	DbPort       string `json:"dbport"`
+	MaxOpenConns int    `json:"maxopenconns"`
+	MaxIdleConns int    `json:"maxidleconns"`
+	Debug        bool   `json:"debug"`
 }
 
 // @Title GetTopic
@@ -71,10 +72,13 @@ func (t *TopicController) GetTopic() {
 	for k, v := range demoData {
 		data[k.(string)] = v
 	}
-	result["data"] = data
+
+	aa, _ := json.Marshal(data)
+	fmt.Println(string(aa))
+	var userinfo Userinfo
+	json.Unmarshal(aa, &userinfo)
+	result["data"] = userinfo
 	t.Data["json"] = result
-	// ob := json.Unmarshal(bb, &userinfo)
-	// t.Ctx.Input.Bind(&str, "str")
 
 	// if !b {
 	// 	topicInfo, err := models.GetOne(form.TopicID)
