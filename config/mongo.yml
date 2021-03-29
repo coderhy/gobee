@@ -1,0 +1,10 @@
+#mysql配置(DB_ + 业务前缀（ALL_）+ 名称)
+MG_ALL_DEMO: #Demo 测试
+    DbHost: "localhost" #服务器地址 string
+    DbUser: "root" #数据库账号 string 
+    DbPwd: "123456" #数据库账号密码 string 
+    DbName: "test" #数据库名称 string
+    DbPort: "27017" #数据库链接端口 
+    MaxOpenConns: 100 #用于设置最大打开的连接数，默认值为0表示不限制
+    MaxIdleConns: 0 #用于设置闲置的连接数
+    Debug: false #用于设置调试sql true=组装语句 默认false

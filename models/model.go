@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-func init() {
+func Setup() {
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	maxIdle := 30
 	maxConn := 30

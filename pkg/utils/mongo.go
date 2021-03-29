@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"gobee/pkg/common"
-	"base.domain.com/global"
+
 	"github.com/mitchellh/mapstructure"
 	log "github.com/sirupsen/logrus" //定义为log 方便后面可插拔
 	"go.mongodb.org/mongo-driver/mongo"
@@ -92,7 +92,7 @@ func getMgConnect(option map[interface{}]interface{}) (*mongo.Database, string, 
 // NewMongo 初始化 OK
 func NewMongo(modelType map[string]interface{}) MongoModel {
 	setModel := MongoModel{}
-	dbConfig := global.GetConfig("mongo")
+	dbConfig := GetConfig("mongo")
 	// options := dbConfig.Get("MG_ALL_DEMO")
 	options := dbConfig.Get(modelType["connection"].(string))
 	// fmt.Println("options", options)

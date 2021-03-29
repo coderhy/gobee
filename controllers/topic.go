@@ -30,6 +30,7 @@ type GetOneRule struct {
 // @Failure 403 body is empty
 // @router /GetTopic [post]
 func (t *TopicController) GetTopic() {
+
 	var form GetOneRule
 	json.Unmarshal(t.Ctx.Input.RequestBody, &form)
 	log.Println(form)
@@ -46,6 +47,7 @@ func (t *TopicController) GetTopic() {
 	if err != nil {
 		t.Data["json"] = err.Error()
 	}
+
 	// if !b {
 	// 	topicInfo, err := models.GetOne(form.TopicID)
 	// 	if err != nil {
