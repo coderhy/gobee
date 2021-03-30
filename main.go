@@ -4,7 +4,7 @@ import (
 	"gobee/pkg/setting"
 	_ "gobee/routers"
 
-	beego "github.com/beego/beego/v2/server/web"
+	"github.com/beego/beego/v2/server/web"
 )
 
 func init() {
@@ -12,9 +12,10 @@ func init() {
 }
 
 func main() {
-	if beego.BConfig.RunMode == "dev" {
-		beego.BConfig.WebConfig.DirectoryIndex = true
-		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
+
+	if web.BConfig.RunMode == "dev" {
+		web.BConfig.WebConfig.DirectoryIndex = true
+		web.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
 	}
-	beego.Run()
+	web.Run()
 }

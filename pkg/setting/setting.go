@@ -9,11 +9,15 @@ import (
 	"strings"
 
 	"github.com/beego/beego/v2/core/config"
-	// beego "github.com/beego/beego/v2/server/web"
 )
+
+func init() {
+
+}
 
 // Setup initialize the configuration instance
 func Setup() {
+
 	utils.ConfigPath = config.DefaultString("configPath", "config")
 	if isExist := common.IsDirExist(utils.ConfigPath); isExist == false {
 		fmt.Println("配置目录路径:", utils.ConfigPath, "不存在,以加载默认配置启用:", utils.ConfigPath, "请检查配置")

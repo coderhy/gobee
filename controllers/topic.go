@@ -3,17 +3,17 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"gobee/pkg/e"
 	"gobee/pkg/utils"
 	"log"
 
 	"github.com/astaxie/beego/validation"
-	"github.com/beego/beego/v2/core/logs"
-	beego "github.com/beego/beego/v2/server/web"
 )
 
 // Operations about Users
 type TopicController struct {
-	beego.Controller
+	// beego.Controller
+	BaseController
 }
 
 type Topic struct {
@@ -43,6 +43,12 @@ type Userinfo struct {
 // @Failure 403 body is empty
 // @router /GetTopic [post]
 func (t *TopicController) GetTopic() {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Printf("GetTopic: %v", err)
+			t.ResponseJson(e.ERROR, err.(string), map[string]interface{}{})
+		}
+	}()
 
 	var form GetOneRule
 	json.Unmarshal(t.Ctx.Input.RequestBody, &form)
@@ -54,7 +60,17 @@ func (t *TopicController) GetTopic() {
 		// 打印错误信息
 		for _, err := range valid.Errors {
 			log.Println(err.Key, err.Message)
-			t.Data["json"] = err.Message
+
+			//1.t.ServeJSON()
+			t.Data["json"] = map[string]interface{}{
+				"code":   e.ERROR,
+				"msg":    e.GetMsg(e.ERROR),
+				"result": map[string]interface{}{},
+			}
+			t.ServeJSON() //对json进行序列化输出
+
+			// 2.recover panic
+			// panic(err.Message)
 		}
 	}
 	if err != nil {
@@ -93,8 +109,9 @@ func (t *TopicController) GetTopic() {
 
 //Prepare @Title  预
 func (u *TopicController) Prepare() {
-	l := logs.GetLogger()
-	l.Println("我先走一步")
+
+	// l := logs.GetLogger()
+	// l.Println("我先走一步")
 	// u.Data["json"] = "Prepare"
 	// u.ServeJSON()
 }
