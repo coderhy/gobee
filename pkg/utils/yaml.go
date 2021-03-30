@@ -80,6 +80,11 @@ func (c *ConfigEngine) Get(name string) interface{} {
 	return nil
 }
 
+// Get 从配置文件中获取值
+func (c *ConfigEngine) GetAll() map[interface{}]interface{} {
+	return c.confData
+}
+
 // GetString 从配置文件中获取string类型的值
 func (c *ConfigEngine) GetString(name string) string {
 	value := c.Get(name)

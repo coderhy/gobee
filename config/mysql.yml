@@ -1,5 +1,5 @@
 #mysql配置(DB_ + 业务前缀（ALL_）+ 名称)
-DB_ALL_DEMO: #Demo 测试
+DB_DEMO: #Demo 测试
     DbHost: "localhost" #服务器地址 
     DbName: "all_test" #数据库名称 
     DbUser: "root" #数据库账号 
@@ -9,13 +9,13 @@ DB_ALL_DEMO: #Demo 测试
     MaxOpenConns: 10 #用于设置最大打开的连接数，默认值为0表示不限制
     MaxIdleConns: 10 #用于设置闲置的连接数
     ConnMaxLifetime: 1 #连接最长存活期，超过这个时间连接将不再被复用,单位分钟
-DB_JS_PRODUCT: #教师商品中心
-    DbHost: "rm-bp137tu4e015700uc.mysql.rds.aliyuncs.com" #服务器地址 
-    DbName: "jsp_shop" #数据库名称 
-    DbUser: "jsp_shoproot" #数据库账号 
-    DbPwd: "htfLCGbMe6hTIH4WFv" #数据库账号密码 
+DB_UGC: #教师商品中心
+    DbHost: "w.talk-test.int.yidian-inc.com" #服务器地址 
+    DbName: "shenbian_ugc" #数据库名称 
+    DbUser: "root" #数据库账号 
+    DbPwd: "`c2#^@j1T)oX:_" #数据库账号密码 
     DbPort: "3306" #数据库链接端口 
-    DbCharset: "utf8mb4" #数据库字符集
+    DbCharset: "utf8" #数据库字符集
     MaxOpenConns: 10 #用于设置最大打开的连接数，默认值为0表示不限制
     MaxIdleConns: 10 #用于设置闲置的连接数
     ConnMaxLifetime: 1 #连接最长存活期，超过这个时间连接将不再被复用,单位分钟

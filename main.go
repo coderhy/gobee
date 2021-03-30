@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gobee/models"
 	"gobee/pkg/setting"
 	_ "gobee/routers"
 
@@ -9,6 +10,7 @@ import (
 
 func init() {
 	setting.Setup()
+	models.Setup()
 }
 
 func main() {
