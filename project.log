@@ -1,3 +1,0 @@
-2021/03/31 15:13:03.850  [E] [setting.go:28]  0 配置目录路径: configss 不存在,以加载默认配置启用: configss 请检查配置
-2021/03/31 15:13:03.857  [I] [parser.go:85]  /Users/admin/home/wwwgo/src/gobee/controllers no changed
-2021/03/31 15:13:03.857  [I] [server.go:241]  http server Running on http://:8080
