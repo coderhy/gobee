@@ -1,10 +1,34 @@
-package topic
+package topicservice
 
 import (
 	"context"
+	models "gobee/models/topic"
 	"gobee/pkg/common"
 	"time"
 )
+
+type Topic struct {
+	ID            int
+	TagID         int
+	Title         string
+	Desc          string
+	Content       string
+	CoverImageUrl string
+	State         int
+	CreatedBy     string
+	ModifiedBy    string
+
+	PageNum  int
+	PageSize int
+}
+
+func (t *Topic) GetTopic() (*models.TopicModel, error) {
+	topic, err := models.GetOne(t.ID)
+	if err != nil {
+		return nil, err
+	}
+	return topic, nil
+}
 
 func hardWork(job interface{}) error {
 	time.Sleep(time.Second * 4)

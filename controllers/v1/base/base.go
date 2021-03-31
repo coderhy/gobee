@@ -26,5 +26,5 @@ func (this *BaseController) ResponseJson(code int, msg string, data interface{})
 
 	this.Data["json"] = res
 	this.ServeJSON() //对json进行序列化输出
-	this.StopRun()
+	// this.StopRun()
 }

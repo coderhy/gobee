@@ -1,9 +1,9 @@
 #mysql配置(DB_ + 业务前缀（ALL_）+ 名称)
-DB_DEMO: #Demo 测试
-    DbHost: "localhost" #服务器地址 
+default: #Demo 测试
+    DbHost: "127.0.0.1" #服务器地址 
     DbName: "all_test" #数据库名称 
     DbUser: "root" #数据库账号 
-    DbPwd: "" #数据库账号密码 
+    DbPwd: "123456" #数据库账号密码 
     DbPort: "3306" #数据库链接端口 
     DbCharset: "utf8mb4" #数据库字符集
     MaxOpenConns: 10 #用于设置最大打开的连接数，默认值为0表示不限制

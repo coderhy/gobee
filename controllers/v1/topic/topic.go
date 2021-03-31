@@ -8,12 +8,12 @@ import (
 
 	base "gobee/controllers/v1/base"
 	"gobee/pkg/e"
-	"gobee/pkg/utils"
-	"gobee/service/topic-service"
+	topicservice "gobee/service/topic-service"
 	"log"
 	"sync"
 	"time"
 
+	// "github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/validation"
 )
 
@@ -23,18 +23,13 @@ type TopicController struct {
 	base.BaseController
 }
 
-type Topic struct {
-	Name string `form:"name"; valid:"Required;MaxSize(60)"`
-	Icon string `form:"icon"; valid:"Required;MaxSize(100)"`
-}
-
 type GetOneRule struct {
 	TopicID int `valid:"Required;Min(1)"`
 }
 
-type Userinfo struct {
-	DbHost       string `json:"dbhost"`
-	DbUser       string `json:"dbuser"`
+type TopicInfo struct {
+	ID           string `json:"id"`
+	Name         string `json:"name"`
 	DbPwd        string `json:"dbpwd"`
 	DbName       string `json:"dbname"`
 	DbPort       string `json:"dbport"`
@@ -59,12 +54,13 @@ func (t *TopicController) GetTopic() {
 
 	var form GetOneRule
 	json.Unmarshal(t.Ctx.Input.RequestBody, &form)
-	log.Println(form)
 	valid := validation.Validation{}
-	_, err := valid.Valid(&form)
-	if valid.HasErrors() {
+	check, err := valid.Valid(&form)
+	if err != nil {
+		t.Data["json"] = err.Error()
+	}
+	if !check {
 		// 如果有错误信息，证明验证没通过
-		// 打印错误信息
 		for _, err := range valid.Errors {
 			log.Println(err.Key, err.Message)
 
@@ -80,38 +76,14 @@ func (t *TopicController) GetTopic() {
 			// panic(err.Message)
 		}
 	}
+
+	//获取topic详情
+	topicService := topicservice.Topic{ID: form.TopicID}
+	topicInfo, err := topicService.GetTopic()
 	if err != nil {
-		t.Data["json"] = err.Error()
+		t.ResponseJson(e.ERROR, err.Error(), map[string]interface{}{})
 	}
-
-	mongoData := utils.AllCacheConfig["mongo"]
-	demoData := mongoData.Get("MG_ALL_DEMO").(map[interface{}]interface{})
-
-	result := map[string]interface{}{}
-	data := map[string]interface{}{}
-	result["code"] = 1
-	result["msg"] = "成功"
-
-	for k, v := range demoData {
-		data[k.(string)] = v
-	}
-
-	aa, _ := json.Marshal(data)
-	fmt.Println(string(aa))
-	var userinfo Userinfo
-	json.Unmarshal(aa, &userinfo)
-	result["data"] = userinfo
-	t.Data["json"] = result
-
-	// if !b {
-	// 	topicInfo, err := models.GetOne(form.TopicID)
-	// 	if err != nil {
-	// 		t.Data["json"] = err.Error()
-	// 	} else {
-	// 		t.Data["json"] = topicInfo
-	// 	}
-	// }
-	t.ServeJSON()
+	t.ResponseJson(e.SUCCESS, "success", topicInfo)
 }
 
 // @Title GetTopicAll  context超时处理 demo hhh
@@ -128,7 +100,7 @@ func (t *TopicController) GetTopicAll() {
 	for i := 0; i < total; i++ {
 		go func() {
 			defer wg.Done()
-			topic.RequestWork(context.Background(), "any")
+			topicservice.RequestWork(context.Background(), "any")
 		}()
 	}
 	wg.Wait()
@@ -157,7 +129,7 @@ func (t *TopicController) GetTopicPanic() {
 			}()
 
 			defer wg.Done()
-			topic.RequestWork2(context.Background(), "any")
+			topicservice.RequestWork2(context.Background(), "any")
 		}()
 	}
 	wg.Wait()

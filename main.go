@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gobee/models"
+	models "gobee/models/base"
 	"gobee/pkg/setting"
 
 	_ "gobee/routers"
