@@ -1,7 +1,6 @@
 package setting
 
 import (
-	"fmt"
 	"gobee/pkg/common"
 	"gobee/pkg/utils"
 	"io/ioutil"
@@ -9,18 +8,19 @@ import (
 	"strings"
 
 	"github.com/beego/beego/v2/core/config"
+	logs "github.com/beego/beego/v2/core/logs"
 )
 
 func init() {
-
+	utils.ConfigPath = config.DefaultString("configPath", "config") //yaml配置文件
 }
 
 // Setup initialize the configuration instance
 func Setup() {
 
-	utils.ConfigPath = config.DefaultString("configPath", "config")
 	if isExist := common.IsDirExist(utils.ConfigPath); isExist == false {
-		fmt.Println("配置目录路径:", utils.ConfigPath, "不存在,以加载默认配置启用:", utils.ConfigPath, "请检查配置")
+		logs.Error("配置目录路径:", utils.ConfigPath, "不存在,以加载默认配置启用:", utils.ConfigPath, "请检查配置")
+		// fmt.Println("配置目录路径:", utils.ConfigPath, "不存在,以加载默认配置启用:", utils.ConfigPath, "请检查配置")
 	}
 
 	files, _ := ioutil.ReadDir(utils.ConfigPath)

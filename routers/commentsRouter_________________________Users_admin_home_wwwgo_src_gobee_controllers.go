@@ -25,4 +25,13 @@ func init() {
             Filters: nil,
             Params: nil})
 
+    beego.GlobalControllerRouter["gobee/controllers/v1/topic:TopicController"] = append(beego.GlobalControllerRouter["gobee/controllers/v1/topic:TopicController"],
+        beego.ControllerComments{
+            Method: "GetTopicPanic",
+            Router: "/GetTopicPanic",
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
 }
