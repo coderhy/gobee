@@ -8,9 +8,10 @@
 package routers
 
 import (
-	"gobee/controllers"
+	// topic "gobee/controllers/v1/topic"
+	controllers "gobee/controllers/v1/topic"
 
-	beego "github.com/beego/beego/v2/server/web"
+	"github.com/beego/beego/v2/server/web"
 )
 
 func init() {
@@ -27,13 +28,13 @@ func init() {
 		),
 	) */
 
-	ns := beego.NewNamespace("/v1",
-		beego.NSNamespace("/topic",
-			beego.NSInclude(
+	ns := web.NewNamespace("/v1",
+		web.NSNamespace("/topic",
+			web.NSInclude(
 				&controllers.TopicController{},
 			),
 			// beego.NSRouter("/GetTopic", &controllers.TopicController{}),
 		),
 	)
-	beego.AddNamespace(ns)
+	web.AddNamespace(ns)
 }

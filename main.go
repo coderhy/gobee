@@ -3,6 +3,7 @@ package main
 import (
 	"gobee/models"
 	"gobee/pkg/setting"
+
 	_ "gobee/routers"
 
 	"github.com/beego/beego/v2/server/web"

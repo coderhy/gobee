@@ -1,11 +1,18 @@
 package controllers
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
+	"runtime"
+
+	base "gobee/controllers/v1/base"
 	"gobee/pkg/e"
 	"gobee/pkg/utils"
+	"gobee/service/topic-service"
 	"log"
+	"sync"
+	"time"
 
 	"github.com/astaxie/beego/validation"
 )
@@ -13,7 +20,7 @@ import (
 // Operations about Users
 type TopicController struct {
 	// beego.Controller
-	BaseController
+	base.BaseController
 }
 
 type Topic struct {
@@ -105,6 +112,58 @@ func (t *TopicController) GetTopic() {
 	// 	}
 	// }
 	t.ServeJSON()
+}
+
+// @Title GetTopicAll  context超时处理 demo hhh
+// @Description find topic by topicID
+// @Param	body		body 	GetOneRule	true		"The rule"
+// @Success 200 {object} GetOneRule
+// @Failure 403 body is empty
+// @router /GetTopicAll [get]
+func (t *TopicController) GetTopicAll() {
+	const total = 1000
+	var wg sync.WaitGroup
+	wg.Add(total)
+	now := time.Now()
+	for i := 0; i < total; i++ {
+		go func() {
+			defer wg.Done()
+			topic.RequestWork(context.Background(), "any")
+		}()
+	}
+	wg.Wait()
+	fmt.Println("elapsed:", time.Since(now))
+	time.Sleep(time.Second * 8)
+	fmt.Println("number of goroutines:", runtime.NumGoroutine())
+}
+
+// @Title GetTopicPanic  捕获panic
+// @Description find topic by topicID
+// @Param	body		body 	GetOneRule	true		"The rule"
+// @Success 200 {object} GetOneRule
+// @Failure 403 body is empty
+// @router /GetTopicPanic [get]
+func (t *TopicController) GetTopicPanic() {
+	const total = 10
+	var wg sync.WaitGroup
+	wg.Add(total)
+	now := time.Now()
+	for i := 0; i < total; i++ {
+		go func() {
+			defer func() {
+				if p := recover(); p != nil {
+					fmt.Println("oops, panic")
+				}
+			}()
+
+			defer wg.Done()
+			topic.RequestWork2(context.Background(), "any")
+		}()
+	}
+	wg.Wait()
+	fmt.Println("elapsed:", time.Since(now))
+	time.Sleep(time.Second * 20)
+	fmt.Println("number of goroutines:", runtime.NumGoroutine())
 }
 
 //Prepare @Title  预
