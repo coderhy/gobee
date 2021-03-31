@@ -2,6 +2,7 @@ package topic
 
 import (
 	"context"
+	"gobee/pkg/common"
 	"time"
 )
 
@@ -33,7 +34,8 @@ func hardWork2(job interface{}) error {
 
 //recover只能捕获当前协程当前函数或直接调用函数的panic  其他协程panic无法直接捕获
 func RequestWork2(ctx context.Context, job interface{}) error {
-	ctx, cancel := context.WithTimeout(ctx, time.Second*2)
+	// ctx, cancel := context.WithTimeout(ctx, time.Second*2)
+	ctx, cancel := common.ShrinkDeadline(ctx, time.Second*2)
 	defer cancel()
 
 	done := make(chan error, 1)
