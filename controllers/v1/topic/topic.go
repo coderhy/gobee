@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"runtime"
 
-	base "gobee/controllers/v1/base"
+	cBase "gobee/controllers/v1/base"
 	"gobee/pkg/e"
-	topicservice "gobee/service/topic-service"
+	sTopic "gobee/service/topic-service"
 	"log"
 	"sync"
 	"time"
@@ -20,7 +20,7 @@ import (
 // Operations about Users
 type TopicController struct {
 	// beego.Controller
-	base.BaseController
+	cBase.BaseController
 }
 
 type GetOneRule struct {
@@ -78,7 +78,7 @@ func (t *TopicController) GetTopic() {
 	}
 
 	//获取topic详情
-	topicService := topicservice.Topic{ID: form.TopicID}
+	topicService := sTopic.Topic{ID: form.TopicID}
 	topicInfo, err := topicService.GetTopic()
 	if err != nil {
 		t.ResponseJson(e.ERROR, err.Error(), map[string]interface{}{})
@@ -100,7 +100,7 @@ func (t *TopicController) GetTopicAll() {
 	for i := 0; i < total; i++ {
 		go func() {
 			defer wg.Done()
-			topicservice.RequestWork(context.Background(), "any")
+			sTopic.RequestWork(context.Background(), "any")
 		}()
 	}
 	wg.Wait()
@@ -129,7 +129,7 @@ func (t *TopicController) GetTopicPanic() {
 			}()
 
 			defer wg.Done()
-			topicservice.RequestWork2(context.Background(), "any")
+			sTopic.RequestWork2(context.Background(), "any")
 		}()
 	}
 	wg.Wait()

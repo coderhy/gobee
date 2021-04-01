@@ -2,7 +2,7 @@ package topicservice
 
 import (
 	"context"
-	models "gobee/models/topic"
+	mTopic "gobee/models/topic"
 	"gobee/pkg/common"
 	"time"
 )
@@ -22,8 +22,8 @@ type Topic struct {
 	PageSize int
 }
 
-func (t *Topic) GetTopic() (*models.TopicModel, error) {
-	topic, err := models.GetOne(t.ID)
+func (t *Topic) GetTopic() (*mTopic.TopicModel, error) {
+	topic, err := mTopic.GetOne(t.ID)
 	if err != nil {
 		return nil, err
 	}
