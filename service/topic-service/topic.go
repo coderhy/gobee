@@ -23,7 +23,8 @@ type Topic struct {
 }
 
 func (t *Topic) GetTopic() (*mTopic.TopicModel, error) {
-	topic, err := mTopic.GetOne(t.ID)
+	var topicModel mTopic.TopicModel
+	topic, err := topicModel.GetOne(t.ID)
 	if err != nil {
 		return nil, err
 	}
