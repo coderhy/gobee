@@ -31,12 +31,12 @@ func (t *TopicModel) GetDBName() string {
 	return "DB_UGC"
 }
 
-func GetOne(topicID int) (t *TopicModel, err error) {
+func (t *TopicModel) GetOne(topicID int) (*TopicModel, error) {
 	// o := orm.NewOrm()
 	o := orm.NewOrmUsingDB(t.GetDBName())
 	topic := TopicModel{Id: topicID}
 
-	err = o.Read(&topic)
+	err := o.Read(&topic)
 
 	if err == orm.ErrNoRows {
 		return &TopicModel{}, errors.New("查询不到")
