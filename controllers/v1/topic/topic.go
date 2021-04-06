@@ -65,15 +65,16 @@ func (t *TopicController) GetTopic() {
 			log.Println(err.Key, err.Message)
 
 			//1.t.ServeJSON()
-			t.Data["json"] = map[string]interface{}{
-				"code":   e.ERROR,
-				"msg":    e.GetMsg(e.ERROR),
-				"result": map[string]interface{}{},
-			}
-			t.ServeJSON() //对json进行序列化输出
+			// t.Data["json"] = map[string]interface{}{
+			// 	"code":   e.ERROR,
+			// 	"msg":    e.GetMsg(e.ERROR),
+			// 	"result": map[string]interface{}{},
+			// }
+			// t.ServeJSON() //对json进行序列化输出
 
 			// 2.recover panic
-			// panic(err.Message)
+			panic(err.Message)
+			// t.ResponseJson(e.ERROR, e.GetMsg(e.ERROR), map[string]interface{}{})
 		}
 	}
 
@@ -83,7 +84,7 @@ func (t *TopicController) GetTopic() {
 	if err != nil {
 		t.ResponseJson(e.ERROR, err.Error(), map[string]interface{}{})
 	}
-	t.ResponseJson(e.SUCCESS, "success", topicInfo)
+	t.ResponseJson(e.SUCCESS, e.GetMsg(e.SUCCESS), topicInfo)
 }
 
 // @Title GetTopicAll  context超时处理 demo hhh
