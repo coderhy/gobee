@@ -17,7 +17,7 @@ var (
 	ConfigPath string
 
 	// AllCacheConfig 通用配置
-	AllCacheConfig map[string]ConfigEngine
+	AllCacheConfig map[string]*ConfigEngine
 )
 
 //ConfigEngine 配置引擎
@@ -233,16 +233,16 @@ func (c *ConfigEngine) setField(obj interface{}, name string, value interface{})
 }
 
 //GetConfig 获取配置(mysql\redis\define)
-func GetConfig(configType string) ConfigEngine {
+func GetConfig(configType string) *ConfigEngine {
 	if AllCacheConfig == nil {
-		AllCacheConfig = make(map[string]ConfigEngine)
+		AllCacheConfig = make(map[string]*ConfigEngine)
 	}
 
 	if _, ok := AllCacheConfig[configType]; ok {
 		return AllCacheConfig[configType]
 	}
 
-	config := ConfigEngine{}
+	config := &ConfigEngine{}
 	config.Load(ConfigPath + "/" + common.Ucfirst(configType) + ".yml")
 	// return config
 	//优化
