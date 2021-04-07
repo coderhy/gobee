@@ -35,7 +35,6 @@ func Setup() {
 		config.Load(utils.ConfigPath + "/" + f.Name())
 		utils.AllCacheConfig[filenameOnly] = config
 	}
-
 }
 
 /* func Setup() {
