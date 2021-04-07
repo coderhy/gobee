@@ -28,7 +28,7 @@ func (t *TopicModel) TableName() string {
 }
 
 func (t *TopicModel) GetDBName() string {
-	return "DB_UGC"
+	return "db_ugc"
 }
 
 func (t *TopicModel) GetOne(topicID int) (*TopicModel, error) {
