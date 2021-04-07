@@ -1,13 +1,11 @@
 package setting
 
 import (
-	"fmt"
 	"gobee/pkg/common"
 	"gobee/pkg/utils"
 	"io/ioutil"
 	"path"
 	"strings"
-	"unicode/utf8"
 
 	"github.com/beego/beego/v2/core/config"
 	logs "github.com/beego/beego/v2/core/logs"
@@ -38,9 +36,6 @@ func Setup() {
 		utils.AllCacheConfig[filenameOnly] = config
 	}
 
-	str := "gobee何渊"
-	fmt.Println(len(str))
-	fmt.Println(utf8.RuneCountInString(str))
 }
 
 /* func Setup() {
